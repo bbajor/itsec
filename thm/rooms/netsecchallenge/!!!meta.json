@@ -14,8 +14,8 @@
 			"isExpanded": false,
 			"type": "text",
 			"mime": "text/html",
-			"format": "markdown",
-			"dataFileName": "Net Sec Challenge.md",
+			"format": "html",
+			"dataFileName": "Net Sec Challenge.html",
 			"noImport": false,
 			"attributes": [],
 			"attachments": [
@@ -44,6 +44,18 @@
 					"dataFileName": "2_Net Sec Challenge_image.png"
 				}
 			]
+		},
+		{
+			"noImport": true,
+			"dataFileName": "navigation.html"
+		},
+		{
+			"noImport": true,
+			"dataFileName": "index.html"
+		},
+		{
+			"noImport": true,
+			"dataFileName": "style.css"
 		}
 	]
 }
